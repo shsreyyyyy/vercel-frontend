@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { toast } from 'react-toastify';
-import axios from "axios"
+import api from "../api/api";
 import { Link, useNavigate } from 'react-router-dom';
 
 const Register = () => {
@@ -16,9 +16,9 @@ const Register = () => {
             e.preventDefault()
              try {
                
-                const{data}=await axios.post("http://localhost:3000/youtube/user/register",{
+                const{data}=await api.post("/youtube/user/register",{
                     name,email,password
-                },{withCredentials:true})  
+                },)  
                 toast.success(data.message)
                 navigate("/login")  
             } catch (error) {

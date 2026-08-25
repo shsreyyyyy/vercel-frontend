@@ -1,6 +1,6 @@
 import React,{useState} from 'react'
 import {Link,useNavigate,} from "react-router-dom"
-import axios from 'axios'
+import api from '../api/api'
 import { toast } from 'react-toastify'
 import { useEffect } from 'react'
 
@@ -15,7 +15,7 @@ const VerifyForgotOtp = () => {
   
     const getTimer=async()=>{
     try {
-      const {data}=await axios.get("http://localhost:3000/youtube/user/forgotOtpTimer",{withCredentials:true})
+      const {data}=await api.get("/youtube/user/forgotOtpTimer",)
       setTimerLeft(data.ttl)
 
     } catch (error) {
@@ -45,9 +45,9 @@ const VerifyForgotOtp = () => {
     e.preventDefault();
     setBtn(true);
     try {
-      const { data } = await axios.post("http://localhost:3000/youtube/user/checkForgotOtp",
+      const { data } = await api.post("/youtube/user/checkForgotOtp",
          { otp },
-         {withCredentials:true})
+        )
        toast.success(data.message)
       navigate("/updatePassword")
     } catch (error) {
@@ -64,7 +64,7 @@ const VerifyForgotOtp = () => {
 //     e.preventDefault();
 //     setBtn(true);
 //     try {
-//       const { data } = await axios.post("http://localhost:3000/youtube/user/resend",{},{withCredentials:true})
+//       const { data } = await api.post("/youtube/user/resend",{},{withCredentials:true})
 //       toast.success(data.message)
 //       await getTimer()
 //     } catch (error) {

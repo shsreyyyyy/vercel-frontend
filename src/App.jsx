@@ -10,7 +10,7 @@ import Sidebar from './headers/Sidebar'
 import { useState } from 'react'
 import { useEffect } from 'react'
 import { toast } from 'react-toastify'
-import axios from 'axios'
+import api from './api/api'
 import ForgotPassword from './pages/ForgotPassword'
 import VerifyForgotOtp from './pages/verifyForgotOtp'
 import UpdatePassword from './pages/UpdatePassword'
@@ -32,7 +32,7 @@ const App = () => {
   useEffect(() => {
     const checkAuth = async () => {
       try {
-        await axios.get("http://localhost:3000/youtube/user/auth-check", { withCredentials: true })
+        await api.get("/youtube/user/auth-check", { withCredentials: true })
         setIsAuthenticated(true)
       } catch (error) {
         toast.error(error?.response?.data?.message || error.message)

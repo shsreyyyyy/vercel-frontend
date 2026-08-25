@@ -1,6 +1,6 @@
 import { createContext,useContext, useState } from "react";
 import { toast } from "react-toastify";
-import axios from "axios";
+import api from "../api/api";
 import {AppContext} from "./cartContext"
 
 
@@ -16,13 +16,10 @@ const[loading, setLoading]=useState(false)
     const createOrder = async (paymentMethod) => {
         try {
 
-            const { data } = await axios.post(
-                "http://localhost:3000/order/create",
+            const { data } = await api.post(
+                "/order/create",
                 {
                     paymentMethod: paymentMethod
-                },
-                {
-                    withCredentials: true
                 }
             );
             
@@ -44,11 +41,8 @@ const[loading, setLoading]=useState(false)
 
             setLoading(true);
 
-            const { data } = await axios.get(
-                "http://localhost:3000/order/get",
-                {
-                    withCredentials: true
-                }
+            const { data } = await api.get(
+                "/order/get"
             );
 
             setOrders(data.orders);
@@ -70,12 +64,10 @@ const[loading, setLoading]=useState(false)
   try {
     setLoading(true);
 
-    const { data } = await axios.put(
-      `http://localhost:3000/order/user/cancel/${orderId}`,
+    const { data } = await api.put(
+      `/order/user/cancel/${orderId}`,
       {},
-      {
-        withCredentials: true,
-      }
+      
     );
 
     toast.success(data.message);

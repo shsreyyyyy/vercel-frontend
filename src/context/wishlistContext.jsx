@@ -1,5 +1,5 @@
 import { useState,useEffect, createContext } from "react";
-import axios from "axios"
+import api from "../api/api";
 import { toast } from "react-toastify";
 
 export const WishlistContext=createContext();
@@ -11,10 +11,9 @@ export const WishlistProvider=({children})=>{
 
       const addToWishlist = async (product) => {
         try {
-            const { data } = await axios.post(
-                "http://localhost:3000/wishlist/add",
-                { productId: product._id},
-                { withCredentials: true }
+            const { data } = await api.post(
+                "/wishlist/add",
+                { productId: product._id}
             );
             toast.success(data.message);
         } catch (error) {
@@ -27,11 +26,8 @@ export const WishlistProvider=({children})=>{
       // GET WISHLIST
   const getWishlist = async () => {
     try {
-      const { data } = await axios.get(
-        "http://localhost:3000/wishlist/get",
-        {
-          withCredentials: true,
-        }
+      const { data } = await api.get(
+        "/wishlist/get"
       );
 
       setWishlist(data.wishlist);
@@ -47,13 +43,12 @@ export const WishlistProvider=({children})=>{
   // REMOVE WISHLIST
   const removeWishlist = async (productId) => {
     try {
-      const { data } = await axios.delete(
-        "http://localhost:3000/wishlist/remove",
+      const { data } = await api.delete(
+        "/wishlist/remove",
         {
           data: {
             productId,
-          },
-          withCredentials: true,
+          }
         }
       );
 

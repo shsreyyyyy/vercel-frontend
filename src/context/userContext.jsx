@@ -1,5 +1,5 @@
 import { createContext , useState } from "react";
-import axios from "axios";
+import api from "../api/api";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 
@@ -21,9 +21,9 @@ export const UserProvider = ({ children, setIsAuthenticated }) => {
         e.preventDefault();
         setBtn(true);
         try {
-            const { data } = await axios.post("http://localhost:3000/youtube/user/login", {
+            const { data } = await api.post("/youtube/user/login", {
                 email, password
-            }, { withCredentials: true })
+            })
             toast.success(data.message)
             if (data.requiresOtp) {
                 navigate("/verify-otp")
@@ -41,9 +41,9 @@ export const UserProvider = ({ children, setIsAuthenticated }) => {
 
        const logoutHandler = async () => {
         try {
-            const { data } = await axios.post(
-                "http://localhost:3000/youtube/user/logout",
-                {}, { withCredentials: true }
+            const { data } = await api.post(
+                "/youtube/user/logout",
+                {}
             );
 
             toast.success(data.message);
@@ -68,11 +68,8 @@ export const UserProvider = ({ children, setIsAuthenticated }) => {
 
       setBtn(true);
 
-      const { data } = await axios.get(
-        "http://localhost:3000/youtube/user/getProfile",
-        {
-          withCredentials: true,
-        }
+      const { data } = await api.get(
+        "/youtube/user/getProfile",
       );
 
       setUser(data.user);

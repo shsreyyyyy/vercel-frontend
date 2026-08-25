@@ -1,7 +1,8 @@
 import React,{useState} from 'react'
 import { toast } from 'react-toastify'
 import { Link, useNavigate } from 'react-router-dom'
-import axios from 'axios'
+import api from "../api/api";
+
 
 const ForgotPassword = () => {
 
@@ -13,9 +14,9 @@ const ForgotPassword = () => {
     e.preventDefault();
     setBtn(true);
     try {
-      const { data } = await axios.post("http://localhost:3000/youtube/user/forgotOtp", {
+      const { data } = await api.post("/youtube/user/forgotOtp", {
      email
-      },{withCredentials:true})
+      },)
 
       toast.success(data.message)
      navigate("/verifyForgotOtp")

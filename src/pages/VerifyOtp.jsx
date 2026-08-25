@@ -1,6 +1,6 @@
 import React,{useState} from 'react'
 import {Link,useNavigate,} from "react-router-dom"
-import axios from 'axios'
+import api from '../api/api'
 import { toast } from 'react-toastify'
 import { useEffect } from 'react'
 
@@ -15,7 +15,7 @@ const VerifyOtp = ({setIsAuthenticated}) => {
   
     const getTimer=async()=>{
     try {
-      const {data}=await axios.get("http://localhost:3000/youtube/user/otpTimer",{withCredentials:true})
+      const {data}=await api.get("/youtube/user/otpTimer",)
       setTimerLeft(data.ttl)
 
     } catch (error) {
@@ -45,9 +45,9 @@ const VerifyOtp = ({setIsAuthenticated}) => {
     e.preventDefault();
     setBtn(true);
     try {
-      const { data } = await axios.post("http://localhost:3000/youtube/user/verify_otp",
+      const { data } = await api.post("/youtube/user/verify_otp",
          { otp },
-         {withCredentials:true})
+         )
       setIsAuthenticated(true)
        toast.success(data.message)
       navigate("/home")
@@ -65,7 +65,7 @@ const VerifyOtp = ({setIsAuthenticated}) => {
     e.preventDefault();
     setBtn(true);
     try {
-      const { data } = await axios.post("http://localhost:3000/youtube/user/resend",{},{withCredentials:true})
+      const { data } = await api.post("/youtube/user/resend",{})
       toast.success(data.message)
       await getTimer()
     } catch (error) {

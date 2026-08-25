@@ -1,7 +1,7 @@
 import {  createContext, useEffect, useState } from "react";
-import axios from "axios";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import { api } from "../api/api";
 
 
 export const AppContext = createContext();
@@ -15,11 +15,9 @@ export const AppProvider = ({ children, isAuthenticated, setIsAuthenticated }) =
 
     const getCart = async () => {
         try {
-            const { data } = await axios.get(
-                "http://localhost:3000/user/cart/getCart",
-                {
-                    withCredentials: true,
-                }
+            const { data } = await api.get(
+                "/user/cart/getCart"
+                
             );
             setCartItems(data.items);
         } catch (error) {
@@ -34,7 +32,7 @@ export const AppProvider = ({ children, isAuthenticated, setIsAuthenticated }) =
 
     const getCount = async () => {
         try {
-            const { data } = await axios.get("http://localhost:3000/user/cart/countCartData", { withCredentials: true })
+            const { data } = await api.get("/user/cart/countCartData")
             setCount(data.count)
         } catch (error) {
             toast.error(error?.response?.data?.message || error.message)
@@ -44,7 +42,7 @@ export const AppProvider = ({ children, isAuthenticated, setIsAuthenticated }) =
 
     const addToCart = async (pd) => {
         try {
-            const { data } = await axios.post("http://localhost:3000/user/cart/add",
+            const { data } = await api.post("/user/cart/add",
                 {
                     productId: pd._id,
                     name: pd.name,
@@ -52,8 +50,8 @@ export const AppProvider = ({ children, isAuthenticated, setIsAuthenticated }) =
                     category: pd.category,
                     description: pd.description,
                     price: pd.price,
-                },
-                { withCredentials: true })
+                }
+                )
             toast.success(data.message)
             await getCart()
             await getCount()
@@ -64,9 +62,9 @@ export const AppProvider = ({ children, isAuthenticated, setIsAuthenticated }) =
 
     const logoutHandler = async () => {
         try {
-            const { data } = await axios.post(
-                "http://localhost:3000/youtube/user/logout",
-                {}, { withCredentials: true }
+            const { data } = await api.post(
+                "/youtube/user/logout",
+                {}
             );
 
             toast.success(data.message);

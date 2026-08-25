@@ -1,6 +1,6 @@
 import { toast } from "react-toastify";
 import { useState, useEffect } from "react";
-import axios from "axios";
+import api from "../api/api";
 import { createContext } from "react";
 
 export const ProductContext = createContext();
@@ -14,13 +14,13 @@ export const ProductProvider = ({ children }) => {
         try {
 
 
-            const { data } = await axios.get(
-                "http://localhost:3000/product/fetchProducts",
+            const { data } = await api.get(
+                "/product/fetchProducts",
                 {
                     params: {
                         category: category
                     },
-                    withCredentials: true
+                    
                 }
             );
             setProducts(data.products);

@@ -1,5 +1,5 @@
 import React, { useEffect, useState,useContext } from "react";
-import axios from "axios";
+import api from "../api/api";
 import { toast } from "react-toastify";
 import { AppContext } from "../context/cartContext";
 import {Link} from "react-router-dom"
@@ -9,9 +9,9 @@ const ViewCart = () => {
 
     const removeHandler=async(pd)=>{
         try {
-            const {data}=await axios.patch("http://localhost:3000/user/cart/removeCartItem",{
+            const {data}=await api.patch("/user/cart/removeCartItem",{
                 productId:pd.productId
-            },{withCredentials:true})
+            })
             getCount()
             setCartItems(data.items)
             toast.success(data.message)
