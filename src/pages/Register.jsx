@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { toast } from 'react-toastify';
-import api from "../api/api";
+import {api} from "../api/api";
 import { Link, useNavigate } from 'react-router-dom';
 
 const Register = () => {

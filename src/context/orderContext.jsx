@@ -1,6 +1,6 @@
 import { createContext,useContext, useState } from "react";
 import { toast } from "react-toastify";
-import api from "../api/api";
+import {api} from "../api/api";
 import {AppContext} from "./cartContext"
 
 

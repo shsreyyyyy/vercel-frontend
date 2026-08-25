@@ -1,6 +1,6 @@
 import React,{useState} from 'react'
 import {Link,useNavigate,} from "react-router-dom"
-import api from '../api/api'
+import {api} from '../api/api'
 import { toast } from 'react-toastify'
 import { useEffect } from 'react'
 

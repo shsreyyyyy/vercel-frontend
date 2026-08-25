@@ -1,5 +1,5 @@
 import { useState,useEffect, createContext } from "react";
-import api from "../api/api";
+import {api} from "../api/api";
 import { toast } from "react-toastify";
 
 export const WishlistContext=createContext();

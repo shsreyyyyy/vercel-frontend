@@ -1,5 +1,5 @@
 import React, { useEffect, useState,useContext } from "react";
-import api from "../api/api";
+import {api} from "../api/api";
 import { toast } from "react-toastify";
 import { AppContext } from "../context/cartContext";
 import {Link} from "react-router-dom"
