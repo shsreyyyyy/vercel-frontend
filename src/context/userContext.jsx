@@ -30,6 +30,7 @@ export const UserProvider = ({ children, setIsAuthenticated }) => {
                 navigate("/verify-otp")
             } else {
                 setIsAuthenticated(true)
+                 localStorage.setItem("authToken", data.token);
                 navigate("/home")
             }
         } catch (error) {
