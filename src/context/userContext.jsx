@@ -24,6 +24,7 @@ export const UserProvider = ({ children, setIsAuthenticated }) => {
             const { data } = await api.post("/youtube/user/login", {
                 email, password
             })
+            localStorage.setItem("verify",data.email)
             toast.success(data.message)
             if (data.requiresOtp) {
                 navigate("/verify-otp")

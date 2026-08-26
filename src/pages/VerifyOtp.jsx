@@ -11,11 +11,13 @@ const VerifyOtp = ({setIsAuthenticated}) => {
   const [btn,setBtn]=useState(false)
   const navigate=useNavigate()
   const[timerLeft,setTimerLeft]=useState(0)
+  const email=localStorage.getItem("verify")
 //get timer
   
     const getTimer=async()=>{
+      
     try {
-      const {data}=await api.get("/youtube/user/otpTimer",)
+      const {data}=await api.get("/youtube/user/otpTimer",{params:{email:email}})
       setTimerLeft(data.ttl)
 
     } catch (error) {
@@ -46,7 +48,8 @@ const VerifyOtp = ({setIsAuthenticated}) => {
     setBtn(true);
     try {
       const { data } = await api.post("/youtube/user/verify_otp",
-         { otp },
+         { email:localStorage.getItem("verify"),
+          otp },
          )
       setIsAuthenticated(true)
        toast.success(data.message)
@@ -65,7 +68,9 @@ const VerifyOtp = ({setIsAuthenticated}) => {
     e.preventDefault();
     setBtn(true);
     try {
-      const { data } = await api.post("/youtube/user/resend",{})
+      const { data } = await api.post("/youtube/user/resend",{
+        email:email
+      })
       toast.success(data.message)
       await getTimer()
     } catch (error) {
