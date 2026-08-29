@@ -32,7 +32,7 @@ const App = () => {
   useEffect(() => {
     const checkAuth = async () => {
       try {
-        await api.get("/youtube/user/auth-check", { withCredentials: true })
+        await api.get("/user/auth-check", { withCredentials: true })
         setIsAuthenticated(true)
       } catch (error) {
         toast.error(error?.response?.data?.message || error.message)
