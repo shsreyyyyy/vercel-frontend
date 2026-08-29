@@ -69,7 +69,7 @@ export const AppProvider = ({ children, isAuthenticated, setIsAuthenticated }) =
         setLogoutLoading(true);
         try {
             const { data } = await api.post(
-                "/youtube/user/logout",
+                "/user/logout",
                 {}
             );
 

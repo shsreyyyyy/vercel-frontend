@@ -14,7 +14,7 @@ const ForgotPassword = () => {
     e.preventDefault();
     setBtn(true);
     try {
-      const { data } = await api.post("/youtube/user/forgotOtp", {
+      const { data } = await api.post("/user/forgotOtp", {
      email
       },)
 

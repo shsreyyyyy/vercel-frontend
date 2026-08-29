@@ -16,7 +16,7 @@ const Register = () => {
             e.preventDefault()
              try {
                
-                const{data}=await api.post("/youtube/user/register",{
+                const{data}=await api.post("/user/register",{
                     name,email,password
                 },)  
                 toast.success(data.message)

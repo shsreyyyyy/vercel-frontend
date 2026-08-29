@@ -17,7 +17,7 @@ const VerifyOtp = ({setIsAuthenticated}) => {
     const getTimer=async()=>{
       
     try {
-      const {data}=await api.get("/youtube/user/otpTimer",{params:{email:email}})
+      const {data}=await api.get("/user/otpTimer",{params:{email:email}})
       setTimerLeft(data.ttl)
 
     } catch (error) {
@@ -47,7 +47,7 @@ const VerifyOtp = ({setIsAuthenticated}) => {
     e.preventDefault();
     setBtn(true);
     try {
-      const { data } = await api.post("/youtube/user/verify_otp",
+      const { data } = await api.post("/user/verify_otp",
          { email:localStorage.getItem("verify"),
           otp },
          )
@@ -68,7 +68,7 @@ const VerifyOtp = ({setIsAuthenticated}) => {
     e.preventDefault();
     setBtn(true);
     try {
-      const { data } = await api.post("/youtube/user/resend",{
+      const { data } = await api.post("/user/resend",{
         email:email
       })
       toast.success(data.message)

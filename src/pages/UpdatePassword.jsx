@@ -14,7 +14,7 @@ const UpdatePassword = () => {
     e.preventDefault();
     setBtn(true);
     try {
-      const { data } = await api.post("/youtube/user/updatePassword", {
+      const { data } = await api.post("/user/updatePassword", {
         password, rePassword
       })
       toast.success(data.message)

@@ -15,7 +15,7 @@ const VerifyForgotOtp = () => {
   
     const getTimer=async()=>{
     try {
-      const {data}=await api.get("/youtube/user/forgotOtpTimer",)
+      const {data}=await api.get("/user/forgotOtpTimer",)
       setTimerLeft(data.ttl)
 
     } catch (error) {
@@ -45,7 +45,7 @@ const VerifyForgotOtp = () => {
     e.preventDefault();
     setBtn(true);
     try {
-      const { data } = await api.post("/youtube/user/checkForgotOtp",
+      const { data } = await api.post("/user/checkForgotOtp",
          { otp },
         )
        toast.success(data.message)
@@ -64,7 +64,7 @@ const VerifyForgotOtp = () => {
 //     e.preventDefault();
 //     setBtn(true);
 //     try {
-//       const { data } = await api.post("/youtube/user/resend",{},{withCredentials:true})
+//       const { data } = await api.post("/user/resend",{},{withCredentials:true})
 //       toast.success(data.message)
 //       await getTimer()
 //     } catch (error) {
