@@ -5,9 +5,9 @@ import {UserContext}  from '../context/userContext'
 const Login = () => {
 
   const { btn, setEmail, setPassword, submitHandler } = useContext(UserContext)
-  return (
-    <div className="flex min-h-screen items-center justify-center bg-gray-900 px-6">
-      <div className="w-full max-w-sm rounded-lg bg-gray-800 p-8 shadow-lg">
+   return (
+    <div className="flex min-h-screen items-center justify-center bg-gray-900 px-4 sm:px-6">
+      <div className="w-full max-w-sm rounded-lg bg-gray-800 p-5 sm:p-8 shadow-lg">
         <div className="text-center">
           <img
             className="mx-auto h-10 w-10"
@@ -36,7 +36,8 @@ const Login = () => {
             <Link to={"/forgotPassword"} className='text-indigo-400 font-semibold cursor-pointer hover:text-indigo-300'>Forgot Password</Link>
           </div>
           <button type="submit"
-            className="w-full rounded-md bg-indigo-600 py-2 font-semibold text-white hover:bg-indigo-700">
+            disabled={btn}
+            className="w-full rounded-md bg-indigo-600 py-2 font-semibold text-white hover:bg-indigo-700 disabled:cursor-not-allowed disabled:opacity-60">
             {btn === true ? "Submitting..." : "Login"}</button>
         </form>
         <p className="mt-6 text-center text-sm text-gray-400">

@@ -8,8 +8,11 @@ export const WishlistContext=createContext();
 export const WishlistProvider=({children})=>{
     const [wishlist, setWishlist] = useState([]);
       const [loading, setLoading] = useState(true);
+      const [wishAddingProductId, setAddingProductId] = useState(null);
+      const [removingProductId, setRemovingProductId] = useState(null);
 
       const addToWishlist = async (product) => {
+        setAddingProductId(product._id);
         try {
             const { data } = await api.post(
                 "/wishlist/add",
@@ -20,6 +23,8 @@ export const WishlistProvider=({children})=>{
             toast.error(
                 error?.response?.data?.message || error.message
             );
+        } finally {
+            setAddingProductId(null);
         }
     };
 
@@ -42,6 +47,7 @@ export const WishlistProvider=({children})=>{
 
   // REMOVE WISHLIST
   const removeWishlist = async (productId) => {
+    setRemovingProductId(productId);
     try {
       const { data } = await api.delete(
         "/wishlist/remove",
@@ -51,9 +57,7 @@ export const WishlistProvider=({children})=>{
           }
         }
       );
-
       toast.success(data.message);
-
       // UI se bhi remove
       setWishlist((prev) =>
         prev.filter(
@@ -65,12 +69,16 @@ export const WishlistProvider=({children})=>{
       toast.error(
         error?.response?.data?.message || error.message
       );
-    }
+    } 
+    finally {
+      setRemovingProductId(null);
   };
+    } 
+   
 
- 
+
 
     return(
-        <WishlistContext.Provider value={{addToWishlist,getWishlist,removeWishlist,loading,wishlist}}>{children}</WishlistContext.Provider>
+        <WishlistContext.Provider value={{addToWishlist,getWishlist,removeWishlist,loading,wishlist,wishAddingProductId,removingProductId}}>{children}</WishlistContext.Provider>
     )
 }

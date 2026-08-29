@@ -9,8 +9,10 @@ export const ProductContext = createContext();
 export const ProductProvider = ({ children }) => {
     const [categories, setCategories] = useState("All Categories");
     const [products, setProducts] = useState([]);
+    const [loading, setLoading] = useState(false);
 
     const fetchProduct = async (category) => {
+        setLoading(true);
         try {
 
 
@@ -29,10 +31,12 @@ export const ProductProvider = ({ children }) => {
             toast.error(
                 error?.response?.data?.message || error.message
             );
+        } finally {
+            setLoading(false);
         }
     };
 
     return (
-        <ProductContext.Provider value={{ products, setProducts, fetchProduct,categories,setCategories }}>{children}</ProductContext.Provider>
+        <ProductContext.Provider value={{ products, setProducts, fetchProduct,categories,setCategories,loading }}>{children}</ProductContext.Provider>
     )
 }

@@ -80,9 +80,9 @@ const VerifyOtp = ({setIsAuthenticated}) => {
       setBtn(false)
     }
   }
-  return (
-    <div className="flex min-h-screen items-center justify-center bg-gray-900 px-6">
-      <div className="w-full max-w-sm rounded-lg bg-gray-800 p-8 shadow-lg">
+   return (
+    <div className="flex min-h-screen items-center justify-center bg-gray-900 px-4 sm:px-6">
+      <div className="w-full max-w-sm rounded-lg bg-gray-800 p-5 sm:p-8 shadow-lg">
         <div className="text-center">
           <img
             className="mx-auto h-10 w-10"
@@ -107,13 +107,13 @@ const VerifyOtp = ({setIsAuthenticated}) => {
   </span>
 </p>
          
-          <button type="submit"
+          <button type="submit" disabled={btn}
             className="w-full rounded-md bg-indigo-600 py-2 font-semibold text-white hover:bg-indigo-700">
             {btn ===true ? "Submitting...":"Login"}</button>
         </form>
         <p className="mt-6 text-center text-sm text-gray-400">
           If You  Not Received Otp?{" "}
-          <button onClick={resendHandler} className="cursor-pointer font-semibold text-indigo-400 hover:text-indigo-300">
+          <button onClick={resendHandler} disabled={btn} className="cursor-pointer font-semibold text-indigo-400 hover:text-indigo-300">
             resend
           </button>
         </p>

@@ -11,6 +11,8 @@ export const AppProvider = ({ children, isAuthenticated, setIsAuthenticated }) =
     const [count, setCount] = useState(0)
     const [cartItems, setCartItems] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [addingProductId, setAddingProductId] = useState(null);
+    const [logoutLoading, setLogoutLoading] = useState(false);
     const navigate=useNavigate()
 
     const getCart = async () => {
@@ -41,6 +43,7 @@ export const AppProvider = ({ children, isAuthenticated, setIsAuthenticated }) =
     }
 
     const addToCart = async (pd) => {
+        setAddingProductId(pd._id);
         try {
             const { data } = await api.post("/user/cart/add",
                 {
@@ -57,10 +60,13 @@ export const AppProvider = ({ children, isAuthenticated, setIsAuthenticated }) =
             await getCount()
         } catch (error) {
             toast.error(error?.response?.data?.message || error.message)
+        } finally {
+            setAddingProductId(null);
         }
     }
 
     const logoutHandler = async () => {
+        setLogoutLoading(true);
         try {
             const { data } = await api.post(
                 "/youtube/user/logout",
@@ -81,6 +87,8 @@ export const AppProvider = ({ children, isAuthenticated, setIsAuthenticated }) =
             toast.error(
                 error.response?.data?.message || error.message
             );
+        } finally {
+            setLogoutLoading(false);
         }
     };
 
@@ -100,7 +108,7 @@ export const AppProvider = ({ children, isAuthenticated, setIsAuthenticated }) =
 
   
     return (
-        <AppContext.Provider value={{ count, getCount, setCount, getCart, loading, cartItems, setCartItems, addToCart,logoutHandler,navigate }}>
+        <AppContext.Provider value={{ count, getCount, setCount, getCart, loading, cartItems, setCartItems, addToCart, addingProductId, logoutHandler, logoutLoading, navigate }}>
             {children}
         </AppContext.Provider>
     )

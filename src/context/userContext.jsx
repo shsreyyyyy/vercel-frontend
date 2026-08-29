@@ -13,6 +13,7 @@ export const UserProvider = ({ children, setIsAuthenticated }) => {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [btn, setBtn] = useState(false)
+    const [logoutLoading, setLogoutLoading] = useState(false)
     const navigate = useNavigate()
       const [user, setUser] = useState(null);
 
@@ -21,7 +22,7 @@ export const UserProvider = ({ children, setIsAuthenticated }) => {
         e.preventDefault();
         setBtn(true);
         try {
-            const { data } = await api.post("/youtube/user/login", {
+            const { data } = await api.post("/user/login", {
                 email, password
             })
             localStorage.setItem("verify",data.email)
@@ -30,7 +31,7 @@ export const UserProvider = ({ children, setIsAuthenticated }) => {
                 navigate("/verify-otp")
             } else {
                 setIsAuthenticated(true)
-                 localStorage.setItem("authToken", data.token);
+                localStorage.setItem("authToken", data.token);
                 navigate("/home")
             }
         } catch (error) {
@@ -42,9 +43,10 @@ export const UserProvider = ({ children, setIsAuthenticated }) => {
     }
 
        const logoutHandler = async () => {
+        setLogoutLoading(true);
         try {
             const { data } = await api.post(
-                "/youtube/user/logout",
+                "/user/logout",
                 {}
             );
 
@@ -62,6 +64,8 @@ export const UserProvider = ({ children, setIsAuthenticated }) => {
             toast.error(
                 error.response?.data?.message || error.message
             );
+        } finally {
+            setLogoutLoading(false);
         }
     };
 
@@ -71,7 +75,7 @@ export const UserProvider = ({ children, setIsAuthenticated }) => {
       setBtn(true);
 
       const { data } = await api.get(
-        "/youtube/user/getProfile",
+        "/user/getProfile",
       );
 
       setUser(data.user);
@@ -90,7 +94,7 @@ export const UserProvider = ({ children, setIsAuthenticated }) => {
   };
 
     return (
-        <UserContext.Provider value={{ submitHandler, btn, setBtn, email, setEmail, password, setPassword,logoutHandler,user,setBtn,btn,getProfile,setUser }}>
+        <UserContext.Provider value={{ submitHandler, btn, setBtn, email, setEmail, password, setPassword,logoutHandler,user,setBtn,btn,getProfile,setUser,logoutLoading }}>
             {children}</UserContext.Provider>
     )
 }

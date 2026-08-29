@@ -31,9 +31,9 @@ const Register = () => {
 
 
     
-    return (
-        <div className="flex min-h-screen items-center justify-center bg-gray-900 px-6">
-            <div className="w-full max-w-sm rounded-lg bg-gray-800 p-8 shadow-lg">
+   return (
+        <div className="flex min-h-screen items-center justify-center bg-gray-900 px-4 sm:px-6">
+            <div className="w-full max-w-sm rounded-lg bg-gray-800 p-5 sm:p-8 shadow-lg">
                 <div className="text-center">
                     <img
                         className="mx-auto h-10 w-10"
@@ -64,8 +64,8 @@ const Register = () => {
                             className="w-full rounded-md border border-gray-600 bg-gray-700 px-3 py-2 text-white outline-none focus:border-indigo-500"
                             placeholder="Enter your password" />
                     </div>
-                    <button type="submit"
-                        className={`w-full rounded-md bg-indigo-600 py-2 font-semibold  hover:bg-indigo-700 ${btn===true ? "text-gray-400":"text-white"}`}>
+                    <button type="submit" disabled={btn}
+                        className={`w-full rounded-md bg-indigo-600 py-2 font-semibold  hover:bg-indigo-700 disabled:cursor-not-allowed disabled:opacity-60 ${btn===true ? "text-gray-400":"text-white"}`}>
                         {btn===true ? "Submitting...":"Register"}</button>
                 </form>
                 <p className="mt-6 text-center text-sm text-gray-400">

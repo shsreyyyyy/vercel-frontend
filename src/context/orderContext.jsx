@@ -12,8 +12,11 @@ export const OrderProvider = ({ children }) => {
 const { setCartItems, setCount } = useContext(AppContext);
 const[orders, setOrders]=useState([])
 const[loading, setLoading]=useState(false)
+const[creatingOrder, setCreatingOrder]=useState(false)
+const[cancellingOrderId, setCancellingOrderId]=useState(null)
 
     const createOrder = async (paymentMethod) => {
+        setCreatingOrder(true);
         try {
 
             const { data } = await api.post(
@@ -33,6 +36,8 @@ const[loading, setLoading]=useState(false)
             );
 
             return null;
+        } finally {
+            setCreatingOrder(false);
         }
     };
 
@@ -61,6 +66,7 @@ const[loading, setLoading]=useState(false)
     };
 
     const cancelOrder = async (orderId) => {
+  setCancellingOrderId(orderId);
   try {
     setLoading(true);
 
@@ -86,9 +92,10 @@ const[loading, setLoading]=useState(false)
     );
   } finally {
     setLoading(false);
+    setCancellingOrderId(null);
   }
 };
     return (
-        <OrderContext.Provider value={{ createOrder,getOrders,orders,loading,cancelOrder }}>{children}</OrderContext.Provider>
+        <OrderContext.Provider value={{ createOrder,getOrders,orders,loading,cancelOrder,creatingOrder,cancellingOrderId }}>{children}</OrderContext.Provider>
     )
 }

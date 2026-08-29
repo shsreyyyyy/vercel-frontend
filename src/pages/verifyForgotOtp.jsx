@@ -75,8 +75,8 @@ const VerifyForgotOtp = () => {
 //     }
 //   }
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gray-900 px-6">
-      <div className="w-full max-w-sm rounded-lg bg-gray-800 p-8 shadow-lg">
+    <div className="flex min-h-screen items-center justify-center bg-gray-900 px-4 sm:px-6">
+      <div className="w-full max-w-sm rounded-lg bg-gray-800 p-5 sm:p-8 shadow-lg">
         <div className="text-center">
           <img
             className="mx-auto h-10 w-10"
@@ -101,7 +101,7 @@ const VerifyForgotOtp = () => {
   </span>
 </p>
          
-          <button type="submit"
+          <button type="submit" disabled={btn}
             className="w-full rounded-md bg-indigo-600 py-2 font-semibold text-white hover:bg-indigo-700">
             {btn ===true ? "Submitting...":"Login"}</button>
         </form>

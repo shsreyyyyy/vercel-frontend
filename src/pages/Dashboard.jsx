@@ -24,17 +24,17 @@ useEffect(() => {
   return (
      <div className="min-h-screen bg-gray-100">
 
-      <div className="max-w-7xl mx-auto py-10 px-6">
+      <div className="max-w-7xl mx-auto py-6 px-4 sm:py-10 sm:px-6">
 
-        <h1 className="text-4xl font-bold mb-8">
+        <h1 className="text-3xl sm:text-4xl font-bold mb-6 sm:mb-8">
           Dashboard
         </h1>
 
         {/* Cards */}
 
-        <div className="grid md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-stretch">
 
-          <div className="bg-white shadow rounded-xl p-6">
+          <div className="bg-white shadow rounded-xl p-6 h-full">
             <h2 className="text-xl font-semibold">
               Orders
             </h2>
@@ -44,7 +44,7 @@ useEffect(() => {
             </p>
           </div>
 
-          <div className="bg-white shadow rounded-xl p-6">
+          <div className="bg-white shadow rounded-xl p-6 h-full">
             <h2 className="text-xl font-semibold">
               Cart
             </h2>
@@ -54,7 +54,7 @@ useEffect(() => {
             </p>
           </div>
 
-          <div className="bg-white shadow rounded-xl p-6">
+          <div className="bg-white shadow rounded-xl p-6 h-full">
             <h2 className="text-xl font-semibold">
               Wishlist
             </h2>
@@ -68,7 +68,7 @@ useEffect(() => {
 
         {/* User */}
 
-        <div className="bg-white shadow rounded-xl mt-10 p-6">
+        <div className="bg-white shadow rounded-xl mt-6 p-4 sm:p-6">
           <h2 className="text-2xl font-bold mb-4">
             User Information
           </h2>
