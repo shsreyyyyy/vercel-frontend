@@ -68,7 +68,7 @@ const App = () => {
                     <Navbar isAuthenticated={isAuthenticated} setIsAuthenticated={setIsAuthenticated} />
                   </div>
                 </div>
-                <div className={isAuthenticated === true ? "pt-20 pl-23" : "pt-15"}>
+                <div className={isAuthenticated === true ? "pt-20 md:pl-23" : "pt-15"}>
                   <Routes>
                     {/* register login forgotPassword dashboard home */}
                     <Route path='/register' element={isAuthenticated ? <Home /> : <Register />} />
