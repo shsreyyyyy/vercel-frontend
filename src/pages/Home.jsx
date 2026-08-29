@@ -5,7 +5,7 @@ import { AppContext } from "../context/cartContext";
 import { BsDot } from "react-icons/bs";
 
 const Home = () => {
-  const { products, fetchProduct } = useContext(ProductContext);
+  const { products, fetchProduct,loading } = useContext(ProductContext);
   const { addToCart } = useContext(AppContext);
 
   useEffect(() => {
