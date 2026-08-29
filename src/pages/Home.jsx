@@ -3,13 +3,19 @@ import Categories from "../products/categories";
 import { ProductContext } from "../context/productContext";
 import { AppContext } from "../context/cartContext";
 import { BsDot } from "react-icons/bs";
+import { WishlistContext } from "../context/wishlistContext";
 
 const Home = () => {
-  const { products, fetchProduct,loading } = useContext(ProductContext);
-  const { addToCart } = useContext(AppContext);
+  const { products, fetchProduct, loading } = useContext(ProductContext);
+  const { addToCart, addingProductId } = useContext(AppContext);
+  const { addToWishlist, getWishlist, wishAddingProductId } = useContext(WishlistContext);
+  
 
   useEffect(() => {
     fetchProduct();
+  }, []);
+  useEffect(() => {
+    getWishlist();
   }, []);
 
  return (
