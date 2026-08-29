@@ -7,8 +7,8 @@ import { WishlistContext } from "../context/wishlistContext";
 const Wishlist = () => {
   
 
-  const { addToCart } = useContext(AppContext);
-  const {loading,wishlist,getWishlist,removeWishlist}=useContext(WishlistContext)
+  const { addToCart, addingProductId: cartAddingProductId } = useContext(AppContext);
+  const {loading,wishlist,getWishlist,removeWishlist,addingProductId,removingProductId}=useContext(WishlistContext)
   const navigate = useNavigate();
 
 
@@ -27,10 +27,10 @@ const Wishlist = () => {
     );
   }
   return (
-    <div className="min-h-screen bg-gray-100 p-6">
+    <div className="min-h-screen bg-gray-100 p-3 sm:p-6">
       {/* Header */}
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-800">
+      <div className="mb-6 sm:mb-8">
+        <h1 className="text-2xl sm:text-3xl font-bold text-gray-800">
           My Wishlist
         </h1>
         <p className="mt-1 text-sm text-gray-500">
@@ -58,7 +58,7 @@ const Wishlist = () => {
         </div>
       ) : (
         /* Products */
-        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-2 sm:gap-6 lg:grid-cols-4">
           {wishlist.map((item) => {
             const product = item.productId;
             return (
@@ -71,10 +71,11 @@ const Wishlist = () => {
                   <img
                     src={product.image}
                     alt={product.name}
-                    className="h-52 w-full object-cover"
+                    className="h-32 sm:h-52 w-full object-cover"
                   />
                   {/* Remove Wishlist */}
                   <button
+                    disabled={removingProductId === product._id}
                     onClick={() =>
                       removeWishlist(product._id)
                     }
@@ -84,31 +85,32 @@ const Wishlist = () => {
                   </button>
                 </div>
                 {/* Details */}
-                <div className="p-4">
-                  <h2 className="truncate text-lg font-bold text-gray-800">
+                <div className="p-3 sm:p-4">
+                  <h2 className="truncate text-sm sm:text-lg font-bold text-gray-800">
                     {product.name}
                   </h2>
-                  <p className="mt-1 text-sm text-gray-500">
+                  <p className="mt-1 text-xs sm:text-sm text-gray-500">
                     {product.category}
                   </p>
-                  <p className="mt-2 line-clamp-2 text-sm text-gray-600">
+                  <p className="mt-2 line-clamp-2 text-xs sm:text-sm text-gray-600">
                     {product.description}
                   </p>
                   {/* Price + Quantity */}
                   <div className="mt-4 flex items-center justify-between">
-                    <span className="text-xl font-bold text-indigo-600">
+                    <span className="text-base sm:text-xl font-bold text-indigo-600">
                       ₹{product.price}
                     </span>
-                    <span className="rounded-md bg-gray-100 px-3 py-1 text-xs text-gray-600">
+                    <span className="rounded-md bg-gray-100 px-2 sm:px-3 py-1 text-[10px] sm:text-xs text-gray-600">
                       Qty: {product.quantity}
                     </span>
                   </div>
                   {/* Add To Cart */}
                   <button
+                    disabled={cartAddingProductId === product._id}
                     onClick={() => addToCart(product)}
-                    className="mt-4 w-full rounded-md bg-indigo-600 py-2.5 font-semibold text-white hover:bg-indigo-700"
+                    className="mt-3 sm:mt-4 w-full rounded-md bg-indigo-600 py-2 sm:py-2.5 text-xs sm:text-sm font-semibold text-white hover:bg-indigo-700"
                   >
-                    Add To Cart
+                    {cartAddingProductId === product._id ? "Adding..." : "Add To Cart"}
                   </button>
                 </div>
               </div>

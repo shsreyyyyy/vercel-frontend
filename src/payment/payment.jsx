@@ -7,7 +7,7 @@ const Payment = () => {
     const [paymentMethod, setPaymentMethod] = useState("upi")
     console.log(paymentMethod)
     const { cartItems } = useContext(AppContext)
-    const { createOrder } = useContext(OrderContext);
+    const { createOrder, creatingOrder } = useContext(OrderContext);
     const subtotal = cartItems.reduce(
         (total, item) =>
             total + item.price * item.quantity,
@@ -17,10 +17,10 @@ const Payment = () => {
     const total = subtotal + deliveryCharge;
 
     return (
-        <div className=' w-355 h-355 p-4 bg-gray-100 rounded-md '>
-            <div className='flex-col h-350 p-2'>
+        <div className=' w-full min-h-screen p-4 bg-gray-100 rounded-md '>
+            <div className='flex flex-col gap-6 p-2'>
                 {/* order summery */}
-                <div className='flex-col rounded-md shadow-lg w-300 h-60 ml-20 bg-white p-1'>
+                <div className='flex-col rounded-md shadow-lg w-full lg-w-1/2 min-h-60 bg-white p-3'>
                     <h1 className='text-center font-bold text-3xl'>Order Summary</h1>
                    <h2 className="flex text-gray-800 font-semibold text-lg justify-between mx-5 mt-5">
   <span>Subtotal</span>
@@ -41,11 +41,11 @@ const Payment = () => {
                 </div>
 
                 {/* make payment */}
-                <div className='mt-10 flex-col rounded-md shadow-lg w-300 h-120 ml-20 bg-white p-1'>
+                <div className='mt-10 flex-col rounded-md shadow-lg w-full lg-w-1/2 min-h-120 mx-0 bg-white p-3'>
                     <h1 className='text-center font-bold text-3xl '>Select Payment Method</h1>
                     {/* upi */}
                     <div onClick={() => setPaymentMethod("upi")}
-                        className={`border rounded-lg mx-5 mt-5 h-20 ${paymentMethod === "upi" ? "border-blue-500 bg-blue-50" : "border-gray-300"}`}>
+                        className={`border rounded-lg mx-2 sm:mx-5 mt-5 min-h-20 ${paymentMethod === "upi" ? "border-blue-500 bg-blue-50" : "border-gray-300"}`}>
                         <div className='flex p-4'>
                             <input type='radio' checked={paymentMethod==="upi"} onChange={()=>setPaymentMethod("upi")}/>
                             <div className='ml-5'>
@@ -56,7 +56,7 @@ const Payment = () => {
                     </div>
                     {/* card */}
                     <div onClick={() => setPaymentMethod("card")}
-                        className={`border rounded-lg mx-5 mt-5 h-20 ${paymentMethod === "card" ? "border-blue-500 bg-blue-50" : "border-gray-300"}`}>
+                        className={`border rounded-lg mx-2 sm:mx-5 mt-5 min-h-20 ${paymentMethod === "card" ? "border-blue-500 bg-blue-50" : "border-gray-300"}`}>
                         <div className='flex p-4'>
                             <input type='radio' checked={paymentMethod==="card"} onChange={()=>setPaymentMethod("card")}/>
                             <div className='ml-5'>
@@ -67,7 +67,7 @@ const Payment = () => {
                     </div>
                     {/* cash on delivery */}
                     <div onClick={() => setPaymentMethod("cash")}
-                        className={`border rounded-lg mx-5 mt-5 h-20 ${paymentMethod === "cash" ? "border-blue-500 bg-blue-50" : "border-gray-300"}`}>
+                        className={`border rounded-lg ,x-2 sm:mx-5 mt-5 min-h-20 ${paymentMethod === "cash" ? "border-blue-500 bg-blue-50" : "border-gray-300"}`}>
                         <div className='flex p-4'>
                             <input type='radio' checked={paymentMethod==="cash"} onChange={()=>setPaymentMethod("cash")}/>
                             <div className='ml-5'>
@@ -77,7 +77,9 @@ const Payment = () => {
                         </div>
                     </div>
                     <div className=''>
-                        <button onClick={()=>createOrder(paymentMethod)} className=' w-287 rounded-md py-2 border bg-blue-500 text-center mx-5 text-white text-xl bold mt-10'>Pay Now</button>
+                        <button disabled={creatingOrder} onClick={()=>createOrder(paymentMethod)} 
+                        className=' w-full rounded-md py-2 border bg-blue-500 text-center text-white text-xl font-bold mt-10'>
+                            {creatingOrder ? "Processing..." : "Pay Now"}</button>
                         </div>
                 </div>
             </div>

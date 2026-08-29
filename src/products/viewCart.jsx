@@ -6,8 +6,10 @@ import {Link} from "react-router-dom"
 const ViewCart = () => {
 
     const {cartItems,setCartItems,loading,getCount,navigate}=useContext(AppContext)
+    const [removingProductId, setRemovingProductId] = useState(null)
 
     const removeHandler=async(pd)=>{
+        setRemovingProductId(pd.productId);
         try {
             const {data}=await api.patch("/user/cart/removeCartItem",{
                 productId:pd.productId
@@ -16,7 +18,9 @@ const ViewCart = () => {
             setCartItems(data.items)
             toast.success(data.message)
         } catch (error) {
-            toast.error(error?.response?.data?.message || data.message)
+            toast.error(error?.response?.data?.message || error.message)
+        } finally {
+            setRemovingProductId(null);
         }
     }
 
@@ -57,8 +61,8 @@ const ViewCart = () => {
     const total = subtotal + delivery;
 
     return (
-        <div className="min-h-screen bg-gray-100 p-8">
-            <h1 className="text-3xl font-bold mb-8">
+        <div className="min-h-screen bg-gray-100 p-3 sm:p-6 lg:p-8">
+            <h1 className="text-xl sm:text-3xl font-bold mb-6 sm:mb-8">
                 My Cart
             </h1>
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -67,25 +71,25 @@ const ViewCart = () => {
                 <div className="lg:col-span-2 space-y-5">
                     {cartItems.map((item) => (
                         <div key={item.productId}
-                            className="bg-white rounded-xl shadow p-5 flex gap-5" >
+                            className="bg-white rounded-xl shadow p-4 sm:p-5 flex flex-col sm:flex-row gap-4 sm:gap-5" >
 
                             {/* Product Image */}
                             <img
                                 src={item.image}
                                 alt={item.name}
-                                className="w-32 h-32 object-cover rounded-lg" />
+                                className="w-full h-48 sm:w-32 sm:h-32 object-cover rounded-lg" />
                             {/* Product Details */}
-                            <div className="flex-1">
-                                <h2 className="text-xl font-bold">
+                            <div className="flex-1 min-w-0">
+                                <h2 className="text-lg sm:text-xl font-bold">
                                     {item.name}
                                 </h2>
                                 <p className="text-sm text-gray-500">
                                     {item.category}
                                 </p>
-                                <p className="text-gray-600 mt-2">
+                                <p className="text-sm sm:text-base text-gray-600 mt-2 line-clamp-2">
                                     {item.description}
                                 </p>
-                                <div className="flex gap-6 mt-3">
+                                <div className="flex flex-wrap gap-4 sm:gap-6 mt-3">
                                     <p className="text-lg font-bold">
                                         ₹{item.price}
                                     </p>
@@ -98,9 +102,10 @@ const ViewCart = () => {
                                 </div>
                             </div>
                             {/* Remove */}
-                            <div>
-                                <button onClick={()=>removeHandler(item)} className="text-red-500 font-semibold hover:text-red-700 border border-red-300 px-5 py-1 rounded-full">
-                                    Remove
+                            <div className="sm:self-start">
+                                <button disabled={removingProductId === item.productId} onClick={()=>removeHandler(item)} 
+                                className="w-full sm:w-auto text-red-500 disabled:cursor-not-allowed disabled:opacity-50 font-semibold hover:text-red-700 border border-red-300 px-5 py-1 rounded-full">
+                                    {removingProductId === item.productId ? "Removing..." : "Remove"}
                                 </button>
                             </div>
                         </div>
@@ -108,7 +113,7 @@ const ViewCart = () => {
                 </div>
 
                 {/* Order Summary */}
-                <div className="bg-white rounded-xl shadow p-6 h-fit">
+                <div className="bg-white rounded-xl shadow p-4 sm:p-6 h-fit lg:sticky lg:top-5">
                     <h2 className="text-2xl font-bold mb-6">
                         Order Summary
                     </h2>

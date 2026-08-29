@@ -9,11 +9,12 @@ const CategoryProducts = () => {
   const { category } = useParams();
   console.log(category)
 
-  const { addToCart } = useContext(AppContext);
+  const { addToCart, addingProductId } = useContext(AppContext);
 
   const {
     products,
-    fetchProduct
+    fetchProduct,
+    loading
   } = useContext(ProductContext);
 
 
@@ -29,12 +30,12 @@ const CategoryProducts = () => {
 
   return (
 
-    <div className="min-h-screen bg-gray-100 p-6">
+    <div className="min-h-screen bg-gray-100 p-3 sm:p-6">
 
       {/* Header */}
-      <div className="mb-8">
+      <div className="mb-6 sm:mb-8">
 
-        <h1 className="text-3xl font-bold text-gray-800">
+        <h1 className="text-2xl sm:text-3xl font-bold text-gray-800">
           {category} Products
         </h1>
 
@@ -46,7 +47,14 @@ const CategoryProducts = () => {
 
 
       {/* Products */}
-      {products.length === 0 ? (
+      {loading ? (
+        <div className="flex min-h-60 items-center justify-center">
+          <div className="flex items-center gap-3 text-gray-600">
+            <span className="h-5 w-5 animate-spin rounded-full border-2 border-gray-300 border-t-indigo-600" />
+            <span>Loading Products...</span>
+          </div>
+        </div>
+      ) : products.length === 0 ? (
 
         <div className="flex min-h-60 items-center justify-center">
 
@@ -65,8 +73,8 @@ const CategoryProducts = () => {
         </div>
 
       ) : (
-
-        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        // product
+        <div className="grid grid-cols-2 gap-3 sm:gap-6 lg:grid-cols-4">
 
           {products.map((product) => (
 
@@ -81,7 +89,7 @@ const CategoryProducts = () => {
                 <img
                   src={product.image}
                   alt={product.name}
-                  className="h-52 w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  className="h-36 sm:h-52 w-full object-cover transition-transform duration-500 group-hover:scale-105"
                 />
 
                 {/* Category Badge */}
@@ -93,10 +101,10 @@ const CategoryProducts = () => {
 
 
               {/* Product Details */}
-              <div className="p-4">
+              <div className="p-3 sm:p-4">
 
                 {/* Name */}
-                <h2 className="truncate text-lg font-bold text-gray-800">
+                <h2 className="truncate text-sm sm:text-lg font-bold text-gray-800">
                   {product.name}
                 </h2>
 
@@ -122,11 +130,11 @@ const CategoryProducts = () => {
                 {/* Price + Quantity */}
                 <div className="mt-4 flex items-center justify-between">
 
-                  <span className="text-xl font-bold text-indigo-600">
+                  <span className="text-base sm:text-xl font-bold text-indigo-600">
                     ₹{product.price}
                   </span>
 
-                  <span className="rounded-md bg-gray-100 px-3 py-1 text-xs font-medium text-gray-600">
+                  <span className="rounded-md bg-gray-100 px-2 sm:px-3 py-1 text-[10px] sm:text-xs font-medium text-gray-600">
                     Qty: {product.quantity}
                   </span>
 
@@ -135,10 +143,11 @@ const CategoryProducts = () => {
 
                 {/* Add To Cart */}
                 <button
+                  disabled={addingProductId === product._id}
                   onClick={() => addToCart(product)}
-                  className="mt-4 w-full rounded-md bg-indigo-600 py-2.5 text-sm font-semibold text-white transition-all duration-200 hover:bg-indigo-700 active:scale-95"
+                  className="mt-4 w-full rounded-md bg-indigo-600 py-2 sm:py-2.5 text-xs sm:text-sm font-semibold text-white transition-all duration-200 hover:bg-indigo-700 active:scale-95"
                 >
-                  Add To Cart
+                  {addingProductId === product._id ? "Adding..." : "Add To Cart"}
                 </button>
 
               </div>

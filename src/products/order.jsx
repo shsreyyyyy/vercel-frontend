@@ -6,7 +6,8 @@ const Orders = () => {
     getOrders,
     orders,
     loading,
-    cancelOrder
+    cancelOrder,
+    cancellingOrderId
   } = useContext(OrderContext);
 
   useEffect(() => {
@@ -34,12 +35,12 @@ const Orders = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-100 p-6">
+    <div className="min-h-screen bg-gray-100 p-3 sm:p-6">
       <div className="mx-auto max-w-6xl">
 
         {/* Header */}
         <div className="mb-6">
-          <h1 className="text-2xl font-bold text-gray-800">
+          <h1 className="text-xl sm:text-2xl font-bold text-gray-800">
             My Orders
           </h1>
 
@@ -63,41 +64,41 @@ const Orders = () => {
 
           /* Orders Table */
           <div className="overflow-hidden rounded-lg bg-white shadow">
-            <div className="overflow-x-auto">
-              <table className="w-full text-left">
+            <div className="w-full overflow-x-auto">
+              <table className="min-w-[900px] w-full text-left">
 
                 {/* Table Header */}
                 <thead className="border-b bg-gray-50">
                   <tr>
-                    <th className="px-5 py-4 text-sm font-semibold text-gray-600">
+                    <th className=" whitespace-nowrap px-4 sm:px-5 py-4 text-sm font-semibold text-gray-600">
                       Product
                     </th>
 
-                    <th className="px-5 py-4 text-sm font-semibold text-gray-600">
+                    <th className=" whitespace-nowrap px-4 sm:px-5 py-4 text-sm font-semibold text-gray-600">
                       Name
                     </th>
 
-                    <th className="px-5 py-4 text-sm font-semibold text-gray-600">
+                    <th className=" whitespace-nowrap px-4 sm:px-5 py-4 text-sm font-semibold text-gray-600">
                       Price
                     </th>
 
-                    <th className="px-5 py-4 text-sm font-semibold text-gray-600">
+                    <th className=" whitespace-nowrap px-4 sm:px-5 py-4 text-sm font-semibold text-gray-600">
                       Quantity
                     </th>
 
-                    <th className="px-5 py-4 text-sm font-semibold text-gray-600">
+                    <th className=" whitespace-nowrap px-4 sm:px-5 py-4 text-sm font-semibold text-gray-600">
                       Category
                     </th>
 
-                    <th className="px-5 py-4 text-sm font-semibold text-gray-600">
+                    <th className=" whitespace-nowrap px-4 sm:px-5 py-4 text-sm font-semibold text-gray-600">
                       Total
                     </th>
 
-                    <th className="px-5 py-4 text-sm font-semibold text-gray-600">
+                    <th className=" whitespace-nowrap px-4 sm:px-5 py-4 text-sm font-semibold text-gray-600">
                       Status
                     </th>
 
-                    <th className="px-5 py-4 text-sm font-semibold text-gray-600">
+                    <th className=" whitespace-nowrap px-4 sm:px-5 py-4 text-sm font-semibold text-gray-600">
                       Action
                     </th>
                   </tr>
@@ -113,7 +114,7 @@ const Orders = () => {
                       >
 
                         {/* Product Image */}
-                        <td className="px-5 py-4">
+                        <td className="whitespace-nowrap px-4 sm:px-5 py-4">
                           <img
                             src={item.image}
                             alt={item.name}
@@ -122,36 +123,36 @@ const Orders = () => {
                         </td>
 
                         {/* Product Name */}
-                        <td className="px-5 py-4">
+                        <td className="whitespace-nowrap px-4 sm:px-5 py-4">
                           <p className="font-semibold text-gray-800">
                             {item.name}
                           </p>
                         </td>
 
                         {/* Price */}
-                        <td className="px-5 py-4 text-gray-700">
+                        <td className="whitespace-nowrap px-4 sm:px-5 py-4">
                           ₹{item.price?.toLocaleString("en-IN")}
                         </td>
 
                         {/* Quantity */}
-                        <td className="px-5 py-4 text-gray-700">
+                        <td className="whitespace-nowrap px-4 sm:px-5 py-4">
                           {item.quantity}
                         </td>
 
                         {/* Category */}
-                        <td className="px-5 py-4">
+                        <td className="whitespace-nowrap px-4 sm:px-5 py-4">
                           <span className="rounded-full bg-indigo-100 px-3 py-1 text-xs font-medium text-indigo-700">
                             {item.category || "N/A"}
                           </span>
                         </td>
 
                         {/* Total */}
-                        <td className="px-5 py-4 font-semibold text-gray-800">
+                        <td className="whitespace-nowrap px-4 sm:px-5 py-4 font-semibold text-gray-800">
                           ₹{(item.price * item.quantity).toLocaleString("en-IN")}
                         </td>
 
                         {/* Status */}
-                        <td className="px-5 py-4">
+                        <td className="whitespace-nowrap px-4 sm:px-5 py-4">
                           <span
                             className={`rounded-full px-3 py-1 text-xs font-semibold ${order.orderStatus === "delivered"
                                 ? "bg-green-100 text-green-700"
@@ -175,10 +176,11 @@ const Orders = () => {
   ) ? (
     <button
       type="button"
+      disabled={cancellingOrderId === order._id}
       onClick={() => handleCancelOrder(order._id)}
       className="rounded-md bg-red-600 px-4 py-2 text-sm font-semibold text-white hover:bg-red-700"
     >
-      Cancel
+      {cancellingOrderId === order._id ? "Cancelling..." : "Cancel"}
     </button>
   ) : (
     <span className="text-sm text-gray-400">—</span>
