@@ -15,18 +15,18 @@ const Categories = () => {
   ];
 
   return (
-    <div className="bg-gray-100 p-6">
-      <h1 className="text-3xl font-bold text-center mb-8">
+    <div className="bg-gray-100 p-4 sm:p-6">
+      <h1 className="text-2xl sm:text-3xl font-bold text-center mb-6 sm:mb-8">
         Categories
       </h1>
 
-      <div className="grid grid-cols-4 gap-6">
+      <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
         {categories.map((category) => (
           <div key={category.id} 
           onClick={()=>navigate(`/categories/${category.id}`)}
-            className="bg-white rounded-xl shadow-md p-6 hover:shadow-xl hover:scale-105 transition duration-300 cursor-pointer"
+            className="bg-white rounded-xl shadow-md p-4 sm:p-6 hover:shadow-xl hover:scale-105 transition duration-300 cursor-pointer"
           >
-            <h2 className="text-xl font-semibold text-center">
+            <h2 className="text-lg sm:text-xl font-semibold text-center">
               {category.name}
             </h2>
           </div>
