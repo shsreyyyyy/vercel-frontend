@@ -15,7 +15,7 @@ const Sidebar = () => {
   const navigate = useNavigate();
   const [active, setActive] = useState("");
   const [mobileOpen, setMobileOpen] = useState(false);
-  const { logoutHandler } = useContext(UserContext)
+  const { logoutHandler,logoutLoading } = useContext(UserContext)
 
   return (
     <>
